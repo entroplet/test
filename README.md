@@ -1,0 +1,2 @@
+# test
+Mere configuration test.
