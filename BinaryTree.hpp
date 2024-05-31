@@ -26,6 +26,7 @@ public:
 	BinaryTree(Node * _root):root(_root){};
 	Node * deleteSubtree(Node *);
 	void inOrderPrint(Node *);
+	Node * BFS(int);
 };
 
 #endif /* BINARYTREE_HPP_ */

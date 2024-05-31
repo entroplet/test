@@ -12,11 +12,18 @@
 #include <iostream>
 
 int main(){
+	Node * tempNode,successor;
 	std::vector<int> v;
 	v = {1, 3, 16, 5, 12, 9, 8, 19, 4};
 	BinaryTree b;
 	b.buildTree(v);
 	b.inOrderPrint(b.getRoot());
+	tempNode = b.BFS(9);
+	std::cout << std::endl <<  "Current node: " << tempNode->getVal() <<std::endl;
+	std::cout << "Successor to node" << tempNode->getVal() << " = "
+			  << (tempNode->getSuccessor())->getVal() << std::endl;
+	std::cout << "Predecessor of 4 is: " <<
+			b.BFS(4)->getPredecessor()->getVal() << std::endl;
 	return 0;
 }
 
@@ -41,7 +48,7 @@ void BinaryTree::buildTree(const std::vector<int>& data){
 		currentNode = nodeQueue.front();
 		nodeQueue.pop_front();
 		currentNode->setLeftChild(new Node(*it));//currentNode->leftChild = new Node(*it);
-		//currentNode->leftChild->setParent(currentNode);
+		currentNode->getLeftChild()->setParent(currentNode);
 		nodeQueue.push_back(currentNode->getLeftChild());
 		it++;
 		if (distance(data.begin(),it)<dataSize){
@@ -80,4 +87,24 @@ void BinaryTree::inOrderPrint(Node * n){
 	if (n->getRightChild()){
 		this->inOrderPrint(n->getRightChild());
 	}
+}
+
+Node * BinaryTree::BFS(int searchkey){
+	std::deque<Node*> nodeQueue;
+	nodeQueue.push_back(this->root);
+	Node * tempNode;
+	while(!nodeQueue.empty()){
+		tempNode = nodeQueue.front();
+		nodeQueue.pop_front();
+		if (tempNode->getVal()==searchkey){
+			return tempNode;
+		}
+		if (tempNode->getLeftChild()){
+			nodeQueue.push_back(tempNode->getLeftChild());
+		}
+		if (tempNode->getRightChild()){
+			nodeQueue.push_back(tempNode->getRightChild());
+		}
+	}
+	return nullptr;
 }

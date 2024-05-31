@@ -29,6 +29,7 @@ public:
 	Node* getRightChild()const{return rightChild;};
 	int calculateHeight();//returns and internally adjusts height
 	Node * firstInSubtree();
+	Node * lastInSubtree();
 	Node * getPredecessor();
 	Node * getSuccessor();
 	void printSubtree(Node *);

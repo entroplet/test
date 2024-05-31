@@ -40,6 +40,15 @@ Node * Node::firstInSubtree(){
 	return currentNode;
 }
 
+Node * Node::lastInSubtree(){
+	//follow all the way to the right
+		Node * currentNode = this;
+		while(currentNode->rightChild){
+			currentNode = currentNode->rightChild;
+		}
+		return currentNode;
+}
+
 Node * Node::getSuccessor(){
 	//two cases, right child and no right child
 	if (this->rightChild){
@@ -54,4 +63,30 @@ Node * Node::getSuccessor(){
 	}
 	return nullptr;//IMPLEMENT throw a no-successor
 }
+
+Node * Node::getPredecessor(){
+	if (!this->parent){
+		if (this->leftChild){
+			return this->leftChild->lastInSubtree();
+		}
+	}
+	if ((this->getParent())->getRightChild()==this){
+		return this->getParent();
+	}
+	else {
+		//up the tree, following until the node is a right node, then get
+		//last node of the left sibling
+		Node * currentNode = this;
+		while (currentNode->parent &&
+			   currentNode == currentNode->parent->leftChild){
+			   currentNode=currentNode->parent;
+		}
+		//current node is either root or the right child of a node
+		if (this->parent){//this means that current node is a right child
+			return this->parent;
+		}
+		return nullptr;
+	}
+}
+
 
